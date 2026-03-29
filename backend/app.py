@@ -195,7 +195,19 @@ def approve(token):
         conn.execute("UPDATE resume_requests SET status = 'approved' WHERE id = ?", (req_id,))
         conn.commit()
 
-    _send_download_email(row["name"], email)
+    try:
+        _send_download_email(data.get("name", "there"), email)
+    except Exception as e:
+        import traceback
+        app.logger.error(f"Failed to send download email: {e}\n{traceback.format_exc()}")
+        return """
+        <html><body style="font-family:sans-serif;text-align:center;padding:60px;background:#0a0f1e;color:#e2e8f0;">
+            <h2 style="color:#f87171;">Approved but email failed!</h2>
+            <p>Could not send email to <b>{}</b>.</p>
+            <p style="color:#94a3b8;">Error: {}</p>
+        </body></html>
+        """.format(email, str(e))
+
     return """
     <html><body style="font-family:sans-serif;text-align:center;padding:60px;background:#0a0f1e;color:#e2e8f0;">
         <h2 style="color:#6366f1;">Approved!</h2>

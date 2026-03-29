@@ -1,17 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "backend/app.py",
-      "use": "@vercel/python"
-    }
-  ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "backend/app.py" },
-    { "src": "/style.css", "dest": "/style.css" },
-    { "src": "/main.js", "dest": "/main.js" },
-    { "src": "/photo.jpg", "dest": "/photo.jpg" },
-    { "src": "/resume.pdf", "dest": "/resume.pdf" },
-    { "src": "/(.*)", "dest": "backend/app.py" }
+    { "src": "/(.*)", "dest": "/api/index.py" }
   ]
 }

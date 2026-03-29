@@ -140,7 +140,9 @@ reqForm.addEventListener('submit', async (e) => {
       reqError.textContent = data.error || 'Something went wrong.';
       reqError.classList.add('show');
     } else {
-      reqSuccess.textContent = data.message;
+      reqSuccess.textContent = data.verified
+        ? '✅ ' + data.message
+        : '📩 ' + data.message;
       reqSuccess.classList.add('show');
       reqForm.reset();
     }

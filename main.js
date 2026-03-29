@@ -1,3 +1,29 @@
+// ── Theme Toggle ──────────────────────────────────────────────────────────────
+const themeToggle = document.getElementById('themeToggle');
+const iconMoon    = themeToggle.querySelector('.icon-moon');
+const iconSun     = themeToggle.querySelector('.icon-sun');
+
+function applyTheme(theme) {
+  if (theme === 'light') {
+    document.body.classList.add('light');
+    iconMoon.style.display = 'none';
+    iconSun.style.display  = 'block';
+  } else {
+    document.body.classList.remove('light');
+    iconMoon.style.display = 'block';
+    iconSun.style.display  = 'none';
+  }
+}
+
+// Load saved preference, default to dark
+applyTheme(localStorage.getItem('theme') || 'dark');
+
+themeToggle.addEventListener('click', () => {
+  const next = document.body.classList.contains('light') ? 'dark' : 'light';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+});
+
 // Nav scroll effect
 const roles = ['Data Scientist', 'Software Engineer', 'Java Developer', 'Machine Learning Engineer', 'Python Developer', 'Data Analyst', 'SQL Developer'];
 let roleIndex = 0, charIndex = 0, isDeleting = false;

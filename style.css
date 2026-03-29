@@ -1004,3 +1004,40 @@ img { max-width: 100%; }
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.5; transform: scale(0.7); }
 }
+
+/* ===== LIGHT MODE OVERRIDES ===== */
+body.light .nav {
+  background: rgba(248, 250, 252, 0.9);
+  border-bottom-color: rgba(0,0,0,0.08);
+}
+
+body.light .code-window { background: #f1f5f9; }
+body.light .code-header { background: #e2e8f0; }
+body.light .code-body   { color: #1e293b; }
+body.light .kw          { color: #7c3aed; }
+body.light .var         { color: #0369a1; }
+body.light .prop        { color: #15803d; }
+body.light .str         { color: #b45309; }
+
+body.light .hero-name {
+  background: linear-gradient(135deg, #0f172a 0%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body.light .timeline::before { background: linear-gradient(to bottom, var(--accent), transparent); }
+
+body.light .form-group input,
+body.light .form-group textarea {
+  background: #f8fafc;
+  color: #0f172a;
+}
+body.light .form-group input::placeholder,
+body.light .form-group textarea::placeholder { color: #94a3b8; }
+
+body.light .modal { background: #ffffff; }
+
+body.light .lc-avatar { background: #fff7ed; }
+
+body.light ::-webkit-scrollbar-track { background: #f1f5f9; }

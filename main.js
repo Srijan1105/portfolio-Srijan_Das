@@ -264,13 +264,14 @@ loadLeetCode();
 })();
 
 // ── GitHub Repo Count ─────────────────────────────────────────────────────────
-(async function () {
+async function fetchRepoCount() {
   try {
     const res  = await fetch('https://api.github.com/users/Srijan1105');
     const data = await res.json();
     const count = data.public_repos;
-    if (count) {
-      document.getElementById('repoCount').textContent = count + '+';
-    }
+    if (count) document.getElementById('repoCount').textContent = count + '+';
   } catch {}
-})();
+}
+
+fetchRepoCount();
+setInterval(fetchRepoCount, 5 * 60 * 1000); // re-check every 5 minutes

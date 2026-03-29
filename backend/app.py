@@ -114,6 +114,19 @@ def request_resume():
     if not valid_email(email):
         return jsonify({"error": "Invalid email address."}), 400
 
+    # ── Verified recruiter: instant access ───────────────────────────────────
+    if is_verified_recruiter(email):
+        try:
+            _send_download_email(name, email)
+            return jsonify({
+                "message": "Verified organization detected! A download link has been sent directly to your email.",
+                "verified": True
+            })
+        except Exception as e:
+            return jsonify({"error": f"Mail failed: {str(e)}"}), 500
+
+    # ── Everyone else: needs approval ────────────────────────────────────────
+
     with get_db() as conn:
         existing = conn.execute(
             "SELECT id, status FROM resume_requests WHERE email = ? ORDER BY id DESC LIMIT 1",

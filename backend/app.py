@@ -170,9 +170,9 @@ def download_resume(token):
     try:
         data = s.loads(token, salt="download", max_age=86400)
     except SignatureExpired:
-        return jsonify({"error": "Download link has expired."}), 400
+        return "<h2 style='font-family:sans-serif'>Download link has expired.</h2>", 400
     except BadSignature:
-        return jsonify({"error": "Invalid download link."}), 400
+        return "<h2 style='font-family:sans-serif'>Invalid download link.</h2>", 400
 
     email = data.get("email")
     with get_db() as conn:
@@ -182,13 +182,14 @@ def download_resume(token):
         ).fetchone()
 
     if not row or row["status"] != "approved":
-        abort(403)
+        return "<h2 style='font-family:sans-serif'>Access denied.</h2>", 403
 
-    resume = os.path.abspath(RESUME_PATH)
-    if not os.path.exists(resume):
-        return jsonify({"error": "Resume file not found on server."}), 404
+    if not RESUME_URL:
+        return "<h2 style='font-family:sans-serif'>Resume not available. Contact dassrijan76@gmail.com</h2>", 404
 
-    return send_file(resume, as_attachment=True, download_name="Srijan_Das_Resume.pdf")
+    # Redirect to the public resume URL (Google Drive / any CDN)
+    from flask import redirect
+    return redirect(RESUME_URL)
 
 
 def _send_download_email(name, email):

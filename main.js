@@ -262,3 +262,15 @@ loadLeetCode();
       .catch(() => {});
   }, 15000);
 })();
+
+// ── GitHub Repo Count ─────────────────────────────────────────────────────────
+(async function () {
+  try {
+    const res  = await fetch('https://api.github.com/users/Srijan1105');
+    const data = await res.json();
+    const count = data.public_repos;
+    if (count) {
+      document.getElementById('repoCount').textContent = count + '+';
+    }
+  } catch {}
+})();

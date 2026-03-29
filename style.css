@@ -155,6 +155,19 @@ img { max-width: 100%; }
   transition: var(--transition);
 }
 
+.theme-toggle {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.theme-toggle:hover { color: var(--accent-light); border-color: var(--border); }
+
 .mobile-menu {
   display: none;
   flex-direction: column;

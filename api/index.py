@@ -212,8 +212,6 @@ def get_views():
         return jsonify({"total": row["total"] if row else 0})
 
 
-_lc_cache = {"data": None, "ts": 0}
-
 @app.route("/api/leetcode")
 def leetcode_stats():
     global _lc_cache

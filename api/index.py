@@ -222,7 +222,33 @@ CATEGORY_KEYWORDS = {
     "Web": ["web", "flask", "django", "fastapi", "html", "css", "javascript", "react", "node", "frontend", "backend", "api", "portfolio", "website"],
 }
 
-def categorize_repo(repo):
+# Custom descriptions for repos that lack one on GitHub
+REPO_DESCRIPTIONS = {
+    "Airline-Management-System": "A Java-based system to streamline airline booking and scheduling operations with centralized data management using JDBC and MySQL.",
+    "AI-Based-Smart-Inventory-Management-for-Small-Businesses": "AI-powered inventory management system for small businesses — predicts stock requirements and reduces wastage using machine learning.",
+    "AI-Task-Management-": "An AI-driven task management application that prioritizes and organizes tasks intelligently based on deadlines and workload.",
+    "BANK-MANAGEMENT-SYSTEM": "A complete bank management system built in Java supporting account creation, transactions, and balance management with a MySQL backend.",
+    "Company_Profit_Prediction-": "Machine learning model to predict company profit based on R&D spend, administration, and marketing data using regression techniques.",
+    "Deforestation-Monitoring": "A data-driven system to monitor and analyze deforestation patterns using satellite data and visualization tools.",
+    "Empowering-Small-and-Marginal-Farmers-with-AI-Driven-Agricultural-Solutions": "AI platform providing personalized crop recommendations, weather insights, and market price predictions to empower small-scale farmers.",
+    "FreelanceHub": "A web platform connecting freelancers with clients, featuring project listings, bidding, and profile management.",
+    "Gas-Detection-System": "IoT-based gas detection system that monitors hazardous gas levels and triggers real-time alerts for safety.",
+    "IPL-2025-Winner-Prediction": "Machine learning model predicting IPL 2025 match winners using historical match data, player stats, and team performance metrics.",
+    "Mobile_Sales_Dashboard": "Interactive Power BI dashboard analyzing mobile sales trends, revenue, and customer demographics across regions.",
+    "Movie-Recommender": "Content-based movie recommendation system using cosine similarity on TF-IDF vectors built with Python and Scikit-learn.",
+    "MovieX": "A movie discovery web app with search, filtering, and detailed movie information powered by a public movie API.",
+    "Retail_Sales_Forcasting": "Data analysis and forecasting model for retail sales using EDA, feature engineering, and evaluation with RMSE and R² metrics.",
+    "Stock-Price-Prediction": "LSTM-based deep learning model to predict stock prices using historical market data and time-series analysis.",
+    "Traffic-Flow-Prediction-System": "Machine learning system to predict urban traffic flow patterns and congestion using historical traffic data.",
+    "Weather-App": "A responsive weather application that fetches real-time weather data and forecasts using a public weather API.",
+    "portfolio-Srijan_Das": "Personal portfolio website built with Flask, HTML, CSS, and JavaScript — featuring live LeetCode stats, GitHub projects, and a resume request system.",
+    "one-compiler": "An online code compiler interface supporting multiple programming languages with real-time execution.",
+    "Hack4Bengal4.0---Team-NextGen": "Hackathon project from Hack4Bengal 4.0 — built by Team NextGen to solve a real-world problem using technology.",
+}
+
+def get_description(repo):
+    name = repo.get("name", "")
+    return REPO_DESCRIPTIONS.get(name) or repo.get("description") or "No description provided."
     cats = set()
     text = " ".join([
         (repo.get("name") or ""),

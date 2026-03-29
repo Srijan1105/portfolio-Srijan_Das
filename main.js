@@ -1,4 +1,4 @@
-// Typing animation
+// Nav scroll effect
 const roles = ['Data Scientist', 'Software Engineer', 'Java Developer', 'Machine Learning Engineer', 'Python Developer', 'Data Analyst', 'SQL Developer'];
 let roleIndex = 0, charIndex = 0, isDeleting = false;
 const typedEl = document.getElementById('typedText');

@@ -1,0 +1,25 @@
+# Environment variables (contains passwords)
+backend/.env
+
+# Database (auto-generated at runtime)
+backend/requests.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

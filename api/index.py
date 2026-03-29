@@ -212,6 +212,71 @@ def get_views():
         return jsonify({"total": row["total"] if row else 0})
 
 
+# ── GitHub Repos ──────────────────────────────────────────────────────────────
+_gh_cache = {"data": None, "ts": 0}
+
+# Map keywords in repo name/description/topics to filter categories
+CATEGORY_KEYWORDS = {
+    "AI":  ["ai", "artificial-intelligence", "nlp", "deep-learning", "neural", "gpt", "llm", "computer-vision", "agriculture"],
+    "ML":  ["ml", "machine-learning", "sklearn", "tensorflow", "keras", "pytorch", "prediction", "forecasting", "classification", "regression", "data-science", "pandas", "numpy"],
+    "Web": ["web", "flask", "django", "fastapi", "html", "css", "javascript", "react", "node", "frontend", "backend", "api", "portfolio", "website"],
+}
+
+def categorize_repo(repo):
+    cats = set()
+    text = " ".join([
+        (repo.get("name") or ""),
+        (repo.get("description") or ""),
+        (repo.get("language") or ""),
+        " ".join(repo.get("topics") or [])
+    ]).lower()
+    for cat, keywords in CATEGORY_KEYWORDS.items():
+        if any(k in text for k in keywords):
+            cats.add(cat)
+    return list(cats) if cats else ["Other"]
+
+@app.route("/api/github-repos")
+def github_repos():
+    global _gh_cache
+    now = time.time()
+    if _gh_cache["data"] and (now - _gh_cache["ts"]) < 300:
+        return jsonify(_gh_cache["data"])
+    try:
+        import urllib.request, json as _json
+        req = urllib.request.Request(
+            "https://api.github.com/users/Srijan1105/repos?per_page=100&sort=updated",
+            headers={"User-Agent": "portfolio-app", "Accept": "application/vnd.github+json"}
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            repos = _json.loads(resp.read())
+
+        result = []
+        for r in repos:
+            if r.get("fork"):
+                continue
+            result.append({
+                "name":        r["name"],
+                "description": r.get("description") or "",
+                "url":         r["html_url"],
+                "homepage":    r.get("homepage") or "",
+                "language":    r.get("language") or "",
+                "topics":      r.get("topics") or [],
+                "stars":       r.get("stargazers_count", 0),
+                "updated":     r.get("updated_at", "")[:10],
+                "categories":  categorize_repo(r),
+            })
+
+        _gh_cache = {"data": result, "ts": now}
+        return jsonify(result)
+    except Exception as e:
+        if _gh_cache["data"]:
+            return jsonify(_gh_cache["data"])
+        return jsonify({"error": str(e)}), 500
+
+
+# ── LeetCode Stats ────────────────────────────────────────────────────────────
+_lc_cache = {"data": None, "ts": 0}
+
 @app.route("/api/leetcode")
 def leetcode_stats():
     global _lc_cache

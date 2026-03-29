@@ -25,9 +25,35 @@ app.config.update(
 )
 
 OWNER_EMAIL       = os.environ.get("OWNER_EMAIL", "dassrijan76@gmail.com")
-RESUME_URL        = os.environ.get("RESUME_URL", "")   # public URL to resume PDF
+RESUME_URL        = os.environ.get("RESUME_URL", "")
 BASE_URL          = os.environ.get("BASE_URL", "http://localhost:5000")
 LEETCODE_USERNAME = os.environ.get("LEETCODE_USERNAME", "dassrijan76")
+
+# Verified company domains — instant resume access, no approval needed
+VERIFIED_DOMAINS = {
+    # Tech giants
+    "google.com", "microsoft.com", "amazon.com", "apple.com", "meta.com",
+    "netflix.com", "adobe.com", "salesforce.com", "oracle.com", "ibm.com",
+    "intel.com", "nvidia.com", "qualcomm.com", "cisco.com", "vmware.com",
+    # Indian IT & product companies
+    "tcs.com", "infosys.com", "wipro.com", "hcltech.com", "techmahindra.com",
+    "capgemini.com", "accenture.com", "cognizant.com", "mphasis.com",
+    "ltimindtree.com", "hexaware.com", "persistent.com", "kpit.com",
+    "mindtree.com", "niit.com", "zensar.com", "birlasoft.com",
+    # Indian startups & product
+    "flipkart.com", "paytm.com", "razorpay.com", "zomato.com", "swiggy.in",
+    "ola.com", "byjus.com", "freshworks.com", "zoho.com", "browserstack.com",
+    "meesho.com", "cred.club", "phonepe.com", "groww.in", "zerodha.com",
+    # Global consulting & finance
+    "deloitte.com", "pwc.com", "ey.com", "kpmg.com", "mckinsey.com",
+    "bcg.com", "bain.com", "jpmorgan.com", "goldmansachs.com",
+    # Recruiting platforms
+    "linkedin.com", "naukri.com", "instahyre.com", "hirist.com",
+}
+
+def is_verified_recruiter(email):
+    domain = email.split("@")[-1].lower()
+    return domain in VERIFIED_DOMAINS
 
 mail = Mail(app)
 s    = URLSafeTimedSerializer(app.config["SECRET_KEY"])

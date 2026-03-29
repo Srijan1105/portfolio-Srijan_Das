@@ -1041,3 +1041,66 @@ body.light .modal { background: #ffffff; }
 body.light .lc-avatar { background: #fff7ed; }
 
 body.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+
+/* ===== IMPACT ===== */
+.impact-section {
+  padding: 48px 0;
+  background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(168,85,247,0.06) 100%);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.impact-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.impact-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
+  flex: 1;
+  max-width: 200px;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.impact-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(99,102,241,0.15);
+}
+
+.impact-icon { font-size: 1.8rem; }
+
+.impact-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  font-family: 'Fira Code', monospace;
+  line-height: 1;
+}
+
+.impact-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .impact-grid { gap: 12px; }
+  .impact-card { min-width: 140px; padding: 18px 16px; }
+  .impact-num  { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .impact-card { max-width: 48%; flex: 0 0 48%; }
+}

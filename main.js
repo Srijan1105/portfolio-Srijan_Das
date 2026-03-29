@@ -199,12 +199,10 @@ async function loadLeetCode() {
 
 loadLeetCode();
 
-// ── View Counter (SSE) ────────────────────────────────────────────────────────
+// ── View Counter (polling) ────────────────────────────────────────────────────
 (function () {
-  // Track this visit
-  fetch('/api/views/track', { method: 'POST' }).catch(() => {});
-
   const el = document.getElementById('viewCount');
+  let lastCount = 0;
 
   function animateCount(from, to) {
     if (from === to) { el.textContent = to.toLocaleString(); return; }
@@ -217,35 +215,22 @@ loadLeetCode();
     }, 30);
   }
 
-  let lastCount = 0;
+  // Track this visit and get initial count
+  fetch('/api/views/track', { method: 'POST' })
+    .then(r => r.json())
+    .then(d => { animateCount(lastCount, d.total); lastCount = d.total; })
+    .catch(() => {});
 
-  if (typeof EventSource !== 'undefined') {
-    const es = new EventSource('/api/views/stream');
-    es.onmessage = (e) => {
-      const count = parseInt(e.data, 10);
-      if (!isNaN(count)) {
-        animateCount(lastCount, count);
-        lastCount = count;
-      }
-    };
-    es.onerror = () => {
-      // Fallback to polling if SSE fails
-      es.close();
-      startPolling();
-    };
-  } else {
-    startPolling();
-  }
-
-  function startPolling() {
-    async function poll() {
-      try {
-        const res = await fetch('/api/views/track', { method: 'POST' });
-        const data = await res.json();
-        animateCount(lastCount, data.total);
-        lastCount = data.total;
-      } catch {}
-    }
-    setInterval(poll, 10000);
-  }
+  // Poll every 15s to reflect other visitors in real time
+  setInterval(() => {
+    fetch('/api/views')
+      .then(r => r.json())
+      .then(d => {
+        if (d.total !== lastCount) {
+          animateCount(lastCount, d.total);
+          lastCount = d.total;
+        }
+      })
+      .catch(() => {});
+  }, 15000);
 })();

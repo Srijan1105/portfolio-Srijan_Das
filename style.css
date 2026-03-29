@@ -1141,3 +1141,51 @@ body.light ::-webkit-scrollbar-track { background: #f1f5f9; }
   font-size: 0.875rem;
   color: var(--accent-light);
 }
+
+/* ===== PROJECT FILTERS ===== */
+.project-filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.filter-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent-light); }
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.projects-loading {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  padding: 40px;
+  text-align: center;
+  grid-column: 1 / -1;
+  font-family: 'Fira Code', monospace;
+}
+
+.project-cat-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--accent-glow);
+  color: var(--accent-light);
+  border: 1px solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

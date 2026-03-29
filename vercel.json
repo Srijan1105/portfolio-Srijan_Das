@@ -4,10 +4,6 @@
     {
       "src": "backend/app.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "*.{html,css,js,jpg,pdf}",
-      "use": "@vercel/static"
     }
   ],
   "routes": [

@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
-app = Flask(__name__, static_folder="../", static_url_path="")
+# On Vercel, static files are served from the root
+_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+app = Flask(__name__, static_folder=_root, static_url_path="")
 CORS(app, origins=["*"])
 
 # ── Config ────────────────────────────────────────────────────────────────────

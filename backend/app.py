@@ -25,7 +25,7 @@ app.config.update(
 )
 
 OWNER_EMAIL       = os.environ.get("OWNER_EMAIL", "dassrijan76@gmail.com")
-RESUME_PATH       = os.environ.get("RESUME_PATH", os.path.join(os.path.dirname(__file__), "../resume.pdf"))
+RESUME_URL        = os.environ.get("RESUME_URL", "")   # public URL to resume PDF
 BASE_URL          = os.environ.get("BASE_URL", "http://localhost:5000")
 LEETCODE_USERNAME = os.environ.get("LEETCODE_USERNAME", "dassrijan76")
 

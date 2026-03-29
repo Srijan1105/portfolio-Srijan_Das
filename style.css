@@ -1104,3 +1104,40 @@ body.light ::-webkit-scrollbar-track { background: #f1f5f9; }
 @media (max-width: 480px) {
   .impact-card { max-width: 48%; flex: 0 0 48%; }
 }
+
+/* ===== CERTIFICATIONS ===== */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.cert-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: var(--transition);
+}
+
+.cert-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(99,102,241,0.15);
+}
+
+.cert-icon { font-size: 2.4rem; flex-shrink: 0; }
+
+.cert-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cert-info .company {
+  font-size: 0.875rem;
+  color: var(--accent-light);
+}

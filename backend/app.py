@@ -195,19 +195,25 @@ def download_resume(token):
 def _send_download_email(name, email):
     token        = s.dumps({"email": email}, salt="download")
     download_url = f"{BASE_URL}/api/download/{token}"
-    msg = Message(
-        subject="Your Resume Download Link - Srijan Das",
-        recipients=[email],
-        html=f"""
-        <h2>Hi {name},</h2>
-        <p>Your request to download Srijan Das's resume has been <b>approved</b>.</p>
-        <p>Click the button below to download. The link is valid for <b>24 hours</b>.</p>
-        <br>
-        <a href="{download_url}" style="background:#6366f1;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Download Resume</a>
-        <p style="color:#888;font-size:12px;margin-top:16px;">If you did not request this, please ignore this email.</p>
-        """
-    )
-    mail.send(msg)
+    try:
+        msg = Message(
+            subject="Your Resume Download Link - Srijan Das",
+            recipients=[email],
+            html=f"""
+            <h2>Hi {name},</h2>
+            <p>Your request to download Srijan Das's resume has been <b>approved</b>.</p>
+            <p>Click the button below to download. The link is valid for <b>24 hours</b>.</p>
+            <br>
+            <a href="{download_url}" style="background:#6366f1;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Download Resume</a>
+            <p style="color:#888;font-size:12px;margin-top:16px;">If you did not request this, please ignore this email.</p>
+            """
+        )
+        mail.send(msg)
+        app.logger.info(f"Download email sent to {email}")
+    except Exception as e:
+        import traceback
+        app.logger.error(f"Failed to send download email to {email}: {e}\n{traceback.format_exc()}")
+        raise
 
 
 # ── View counter (polling-friendly, no SSE) ───────────────────────────────────

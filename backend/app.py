@@ -224,20 +224,9 @@ def download_resume(token):
     except BadSignature:
         return "<h2 style='font-family:sans-serif'>Invalid download link.</h2>", 400
 
-    email = data.get("email")
-    with get_db() as conn:
-        row = conn.execute(
-            "SELECT status FROM resume_requests WHERE email = ? ORDER BY id DESC LIMIT 1",
-            (email,)
-        ).fetchone()
-
-    if not row or row["status"] != "approved":
-        return "<h2 style='font-family:sans-serif'>Access denied.</h2>", 403
-
     if not RESUME_URL:
         return "<h2 style='font-family:sans-serif'>Resume not available. Contact dassrijan76@gmail.com</h2>", 404
 
-    # Redirect to the public resume URL (Google Drive / any CDN)
     from flask import redirect
     return redirect(RESUME_URL)
 

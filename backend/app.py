@@ -203,7 +203,6 @@ def approve(token):
     </body></html>
     """.format(email)
 
-
 @app.route("/api/download/<token>")
 def download_resume(token):
     try:

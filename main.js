@@ -275,3 +275,78 @@ async function fetchRepoCount() {
 
 fetchRepoCount();
 setInterval(fetchRepoCount, 5 * 60 * 1000); // re-check every 5 minutes
+
+// ── GitHub Projects with Filter ───────────────────────────────────────────────
+const GITHUB_SVG = `<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>`;
+const LINK_SVG   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
+let allRepos = [];
+let activeFilter = 'All';
+
+function getLangIcon(lang) {
+  const icons = { Python:'🐍', Java:'☕', JavaScript:'🟨', HTML:'🌐', CSS:'🎨', 'Jupyter Notebook':'📓' };
+  return icons[lang] || '💻';
+}
+
+function renderProjects(filter) {
+  const grid = document.getElementById('projectsGrid');
+  const filtered = filter === 'All'
+    ? allRepos
+    : allRepos.filter(r => r.categories.includes(filter));
+
+  if (!filtered.length) {
+    grid.innerHTML = `<p class="projects-loading">No ${filter} projects found.</p>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((r, i) => `
+    <div class="project-card fade-in" style="animation-delay:${i * 0.05}s">
+      <div class="project-header">
+        <div class="project-icon">${getLangIcon(r.language)}</div>
+        <div class="project-links">
+          <a href="${r.url}" target="_blank" rel="noopener" aria-label="GitHub repo">${GITHUB_SVG}</a>
+          ${r.homepage ? `<a href="${r.homepage}" target="_blank" rel="noopener" aria-label="Live demo">${LINK_SVG}</a>` : ''}
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${r.categories.map(c => `<span class="project-cat-badge">${c}</span>`).join('')}
+      </div>
+      <h3 class="project-title">${r.name.replace(/-/g, ' ')}</h3>
+      <p class="project-desc">${r.description || 'No description provided.'}</p>
+      <div class="project-tags">
+        ${r.language ? `<span>${r.language}</span>` : ''}
+        ${r.topics.slice(0, 4).map(t => `<span>${t}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  // Re-observe new cards for fade-in
+  grid.querySelectorAll('.fade-in').forEach(el => {
+    el.classList.add('visible');
+  });
+}
+
+async function loadProjects() {
+  try {
+    const res  = await fetch('/api/github-repos');
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    allRepos = data;
+    renderProjects('All');
+  } catch (e) {
+    document.getElementById('projectsGrid').innerHTML =
+      `<p class="projects-loading">Could not load projects. <a href="https://github.com/Srijan1105" target="_blank" style="color:var(--accent-light)">View on GitHub →</a></p>`;
+  }
+}
+
+// Filter button clicks
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderProjects(activeFilter);
+  });
+});
+
+loadProjects();

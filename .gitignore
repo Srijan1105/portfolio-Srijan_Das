@@ -4,6 +4,12 @@ backend/.env
 # Database (auto-generated at runtime)
 backend/requests.db
 
+# Resume PDF (serve separately / keep private)
+resume.pdf
+
+# Kiro IDE files
+.kiro/
+
 # Python
 __pycache__/
 *.pyc

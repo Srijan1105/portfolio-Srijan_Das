@@ -146,7 +146,7 @@ def request_resume():
         ).lastrowid
         conn.commit()
 
-    approve_token = s.dumps({"id": row, "email": email}, salt="approve")
+    approve_token = s.dumps({"id": row, "email": email, "name": name}, salt="approve")
     approve_url   = f"{BASE_URL}/api/approve/{approve_token}"
 
     try:

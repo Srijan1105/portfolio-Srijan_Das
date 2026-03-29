@@ -249,6 +249,25 @@ REPO_DESCRIPTIONS = {
 def get_description(repo):
     name = repo.get("name", "")
     return REPO_DESCRIPTIONS.get(name) or repo.get("description") or "No description provided."
+
+CATEGORY_KEYWORDS = {
+    "AI":  ["ai", "artificial-intelligence", "nlp", "deep-learning", "neural", "gpt", "llm", "computer-vision", "agriculture", "smart", "prediction", "recommender"],
+    "ML":  ["ml", "machine-learning", "sklearn", "tensorflow", "keras", "pytorch", "forecasting", "classification", "regression", "data-science", "pandas", "numpy", "sales", "stock", "traffic", "profit"],
+    "Web": ["web", "flask", "django", "fastapi", "html", "css", "javascript", "react", "node", "frontend", "backend", "api", "portfolio", "website", "app", "dashboard", "compiler"],
+}
+
+def categorize_repo(repo):
+    cats = set()
+    text = " ".join([
+        (repo.get("name") or ""),
+        (repo.get("description") or ""),
+        (repo.get("language") or ""),
+        " ".join(repo.get("topics") or [])
+    ]).lower()
+    for cat, keywords in CATEGORY_KEYWORDS.items():
+        if any(k in text for k in keywords):
+            cats.add(cat)
+    return list(cats) if cats else ["Other"]
     cats = set()
     text = " ".join([
         (repo.get("name") or ""),

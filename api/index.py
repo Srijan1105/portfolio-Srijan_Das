@@ -282,7 +282,7 @@ def github_repos():
                 continue
             result.append({
                 "name":        r["name"],
-                "description": r.get("description") or "",
+                "description": get_description(r),
                 "url":         r["html_url"],
                 "homepage":    r.get("homepage") or "",
                 "language":    r.get("language") or "",

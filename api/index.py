@@ -213,6 +213,7 @@ def get_views():
 
 
 # ── GitHub Repos ──────────────────────────────────────────────────────────────
+# v2 - featured filter support
 _gh_cache = {"data": None, "ts": 0}
 
 # Map keywords in repo name/description/topics to filter categories

@@ -209,14 +209,33 @@
       <p class="section-label">What I've built</p>
       <h2 class="section-title">Featured Projects</h2>
 
-      <div class="project-filters">
-        <button class="filter-btn active" data-filter="All">All</button>
-        <button class="filter-btn" data-filter="Web">🌐 Web</button>
-        <button class="filter-btn" data-filter="ML">🤖 ML</button>
-        <button class="filter-btn" data-filter="AI">🧠 AI</button>
-        <button class="filter-btn" data-filter="Other">📦 Other</button>
-        <div class="filter-search-wrap">
-          <input type="text" id="projectSearch" class="filter-search" placeholder="🔍 Search projects..." />
+      <div class="project-filter-bar">
+        <div class="filter-row">
+          <div class="filter-pills" id="filterPills">
+            <button class="filter-pill active" data-filter="All">All</button>
+            <button class="filter-pill" data-filter="Web">🌐 Web</button>
+            <button class="filter-pill" data-filter="ML">🤖 ML</button>
+            <button class="filter-pill" data-filter="AI">🧠 AI</button>
+            <button class="filter-pill" data-filter="Other">📦 Other</button>
+          </div>
+          <div class="filter-controls">
+            <select id="langFilter" class="filter-select">
+              <option value="">All Languages</option>
+            </select>
+            <select id="sortFilter" class="filter-select">
+              <option value="updated">Recently Updated</option>
+              <option value="stars">Most Starred</option>
+              <option value="name">A → Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-row filter-row-bottom">
+          <div class="filter-search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" class="search-icon"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="projectSearch" class="filter-search" placeholder="Search by name, language, topic..." />
+            <button class="filter-clear" id="clearSearch" style="display:none">✕</button>
+          </div>
+          <div class="filter-result-count" id="resultCount"></div>
         </div>
       </div>
 

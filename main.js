@@ -62,11 +62,38 @@ document.querySelectorAll('.skill-card, .project-card, .timeline-item, .about-gr
 
 const form = document.getElementById('contactForm');
 const successMsg = document.getElementById('formSuccess');
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = form.querySelector('button[type="submit"]');
   btn.textContent = 'Sending...'; btn.disabled = true;
-  setTimeout(() => { form.reset(); btn.textContent = 'Send Message'; btn.disabled = false; successMsg.classList.add('show'); setTimeout(() => successMsg.classList.remove('show'), 4000); }, 1200);
+  const name    = form.querySelector('#name').value.trim();
+  const email   = form.querySelector('#email').value.trim();
+  const subject = form.querySelector('#subject').value.trim();
+  const message = form.querySelector('#message').value.trim();
+  try {
+    const res  = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, subject, message })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      successMsg.textContent = data.error || 'Something went wrong.';
+      successMsg.style.color = '#f87171';
+    } else {
+      successMsg.textContent = data.message;
+      successMsg.style.color = '';
+      form.reset();
+    }
+    successMsg.classList.add('show');
+    setTimeout(() => successMsg.classList.remove('show'), 5000);
+  } catch {
+    successMsg.textContent = 'Could not reach server. Please email directly.';
+    successMsg.style.color = '#f87171';
+    successMsg.classList.add('show');
+  } finally {
+    btn.textContent = 'Send Message'; btn.disabled = false;
+  }
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();

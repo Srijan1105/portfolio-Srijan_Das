@@ -329,6 +329,9 @@ def github_repos():
                 "categories":  categorize_repo(r),
                 "featured":    r["name"] in FEATURED_REPOS,
             })
+        # Sort: featured first, then by updated
+        result.sort(key=lambda x: (not x["featured"], x["updated"]), reverse=False)
+        result.sort(key=lambda x: not x["featured"])
 
         _gh_cache = {"data": result, "ts": now}
         return jsonify(result)

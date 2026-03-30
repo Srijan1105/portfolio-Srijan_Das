@@ -299,6 +299,8 @@ def github_repos():
         for r in repos:
             if r.get("fork"):
                 continue
+            if r["name"] in ("portfolio-Srijan_Das", "Srijan1105"):
+                continue
             result.append({
                 "name":        r["name"],
                 "description": get_description(r),

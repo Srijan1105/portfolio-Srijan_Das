@@ -357,4 +357,9 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
+// Search input
+document.getElementById('projectSearch')?.addEventListener('input', () => {
+  renderProjects(activeFilter);
+});
+
 loadProjects();

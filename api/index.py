@@ -246,7 +246,19 @@ REPO_DESCRIPTIONS = {
     "Hack4Bengal4.0---Team-NextGen": "Hackathon project from Hack4Bengal 4.0 — built by Team NextGen to solve a real-world problem using technology.",
 }
 
-def get_description(repo):
+FEATURED_REPOS = {
+    "Mobile_Sales_Dashboard",
+    "Airline-Management-System",
+    "Retail_Sales_Forcasting",
+    "Hack4Bengal4.0---Team-NextGen",  # Pathfinder
+    "FreelanceHub",                    # FoodBridge if renamed
+    "IPL-2025-Winner-Prediction",
+}
+
+# Override categories for specific repos
+CATEGORY_OVERRIDES = {
+    "Mobile_Sales_Dashboard": ["ML"],  # Power BI + MySQL, not Web
+}
     name = repo.get("name", "")
     return REPO_DESCRIPTIONS.get(name) or repo.get("description") or "No description provided."
 

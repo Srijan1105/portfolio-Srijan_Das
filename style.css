@@ -1189,3 +1189,33 @@ body.light ::-webkit-scrollbar-track { background: #f1f5f9; }
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+/* ===== PROJECT SEARCH ===== */
+.filter-search-wrap {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.filter-search {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+  transition: var(--transition);
+  outline: none;
+}
+.filter-search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.filter-search::placeholder { color: var(--text-dim); }
+
+@media (max-width: 768px) {
+  .filter-search-wrap { max-width: 100%; margin-left: 0; }
+}

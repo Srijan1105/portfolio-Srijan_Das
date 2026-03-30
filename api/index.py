@@ -326,6 +326,7 @@ def github_repos():
                 "stars":       r.get("stargazers_count", 0),
                 "updated":     r.get("updated_at", "")[:10],
                 "categories":  categorize_repo(r),
+                "featured":    r["name"] in FEATURED_REPOS,
             })
 
         _gh_cache = {"data": result, "ts": now}

@@ -290,9 +290,17 @@ function getLangIcon(lang) {
 
 function renderProjects(filter) {
   const grid = document.getElementById('projectsGrid');
-  const filtered = filter === 'All'
-    ? allRepos
-    : allRepos.filter(r => r.categories.includes(filter));
+  const search = (document.getElementById('projectSearch')?.value || '').toLowerCase();
+
+  const filtered = allRepos.filter(r => {
+    const matchFilter = filter === 'All' || r.categories.includes(filter);
+    const matchSearch = !search ||
+      r.name.toLowerCase().includes(search) ||
+      r.description.toLowerCase().includes(search) ||
+      r.language.toLowerCase().includes(search) ||
+      r.topics.some(t => t.toLowerCase().includes(search));
+    return matchFilter && matchSearch;
+  });
 
   if (!filtered.length) {
     grid.innerHTML = `<p class="projects-loading">No ${filter} projects found.</p>`;

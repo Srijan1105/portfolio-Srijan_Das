@@ -269,6 +269,9 @@ CATEGORY_KEYWORDS = {
 }
 
 def categorize_repo(repo):
+    name = repo.get("name", "")
+    if name in CATEGORY_OVERRIDES:
+        return CATEGORY_OVERRIDES[name]
     cats = set()
     text = " ".join([
         (repo.get("name") or ""),

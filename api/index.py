@@ -260,6 +260,8 @@ FEATURED_REPOS = {
 CATEGORY_OVERRIDES = {
     "Mobile_Sales_Dashboard": ["ML"],  # Power BI + MySQL, not Web
 }
+
+def get_description(repo):
     name = repo.get("name", "")
     return REPO_DESCRIPTIONS.get(name) or repo.get("description") or "No description provided."
 

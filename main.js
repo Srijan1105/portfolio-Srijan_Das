@@ -191,7 +191,7 @@ function renderProjects() {
   const { category, search, lang, sort } = getFilterValues();
 
   let filtered = allRepos.filter(r => {
-    const matchCat    = category === 'All' ? r.featured : r.categories.includes(category);
+    const matchCat    = category === 'All' ? FEATURED_NAMES.has(r.name) : r.categories.includes(category);
     const matchLang   = !lang || r.language === lang;
     const matchSearch = !search ||
       r.name.toLowerCase().includes(search) ||

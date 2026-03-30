@@ -73,6 +73,39 @@ EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 def index():
     return app.send_static_file("index.html")
 
+@app.route("/api/contact", methods=["POST"])
+def contact():
+    data    = request.get_json(silent=True) or {}
+    name    = (data.get("name") or "").strip()
+    email   = (data.get("email") or "").strip()
+    subject = (data.get("subject") or "").strip()
+    message = (data.get("message") or "").strip()
+
+    if not name or not email or not message:
+        return jsonify({"error": "Name, email and message are required."}), 400
+
+    try:
+        msg = Message(
+            subject=f"Portfolio Contact: {subject or 'New Message'} from {name}",
+            recipients=[OWNER_EMAIL],
+            html=f"""
+            <h2>New Contact Form Message</h2>
+            <p><b>Name:</b> {name}</p>
+            <p><b>Email:</b> {email}</p>
+            <p><b>Subject:</b> {subject or 'N/A'}</p>
+            <hr>
+            <p><b>Message:</b></p>
+            <p>{message.replace(chr(10), '<br>')}</p>
+            """
+        )
+        mail.send(msg)
+        return jsonify({"message": "Message sent! I'll get back to you soon."})
+    except Exception as e:
+        import traceback
+        app.logger.error(f"Contact mail error: {e}\n{traceback.format_exc()}")
+        return jsonify({"error": f"Failed to send: {str(e)}"}), 500
+
+
 @app.route("/api/request-resume", methods=["POST"])
 def request_resume():
     data   = request.get_json(silent=True) or {}

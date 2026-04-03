@@ -197,6 +197,10 @@ const FEATURED_NAMES = new Set([
   "IPL-2025-Winner-Prediction",
 ]);
 
+const REPO_DESCRIPTIONS = {
+  "InterviewAI": "AI-powered mock interview platform that generates role-specific questions, evaluates answers in real-time, and provides personalized feedback to help candidates prepare effectively.",
+};
+
 let allRepos = [];
 let activeFilter = 'All';
 
@@ -290,7 +294,7 @@ async function loadProjects() {
     const res = await fetch('/api/github-repos');
     const data = await res.json();
     if (data.error) throw new Error(data.error);
-    allRepos = data;
+    allRepos = data.map(r => ({ ...r, description: r.description || REPO_DESCRIPTIONS[r.name] || 'No description provided.' }));
     populateLangFilter();
     renderProjects();
   } catch {

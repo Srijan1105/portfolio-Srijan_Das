@@ -278,14 +278,15 @@ REPO_DESCRIPTIONS = {
     "portfolio-Srijan_Das": "Personal portfolio website built with Flask, HTML, CSS, and JavaScript — featuring live LeetCode stats, GitHub projects, and a resume request system.",
     "one-compiler": "An online code compiler interface supporting multiple programming languages with real-time execution.",
     "Hack4Bengal4.0---Team-NextGen": "Hackathon project from Hack4Bengal 4.0 — built by Team NextGen to solve a real-world problem using technology.",
+    "InterviewAI": "AI-powered mock interview platform that generates role-specific questions, evaluates answers in real-time, and provides personalized feedback to help candidates prepare effectively.",
 }
 
 FEATURED_REPOS = {
     "Mobile_Sales_Dashboard",
     "Airline-Management-System",
     "Retail_Sales_Forcasting",
-    "Hack4Bengal4.0---Team-NextGen",  # Pathfinder
-    "FreelanceHub",                    # FoodBridge if renamed
+    "InterviewAI",
+    "FreelanceHub",
     "IPL-2025-Winner-Prediction",
 }
 

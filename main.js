@@ -192,7 +192,7 @@ const FEATURED_NAMES = new Set([
   "Mobile_Sales_Dashboard",
   "Airline-Management-System",
   "Retail_Sales_Forcasting",
-  "Hack4Bengal4.0---Team-NextGen",
+  "InterviewAI",
   "FreelanceHub",
   "IPL-2025-Winner-Prediction",
 ]);
